@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>譜面ラボ</title>
+        <meta name="description" content="譜面ラボはTJAファイル形式の譜面を読み込み研究できるサイトです。様々な運手/区切り/アレンジに対応しています。" />
+        <meta name="format-detection" content="telephone=no" />
+        <link href="style.css" rel="stylesheet" />
+        <link rel="icon" href="icon.png" />
+        <meta property="og:site_name" content="譜面ラボ" />
+        <meta property="og:url" content="https://taikun24.github.io/fumen-lab" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="譜面ラボ" />
+        <meta property="og:description" content="譜面ラボはTJAファイル形式の譜面を読み込み研究できるサイトです。様々な運手/区切り/アレンジに対応しています。" />
+        <meta property="og:image" content="https://taikun24.github.io/fumen-lab/og.png" />
+        <meta property="og:locale" content="ja_JP" />
+        <meta name="twitter:card" content="summary_large_image or summary" />
+        <meta name="twitter:description" content="譜面ラボはTJAファイル形式の譜面を読み込み研究できるサイトです。様々な運手/区切り/アレンジに対応しています。" />
+        <meta name="twitter:image:src" content="https://taikun24.github.io/fumen-lab/og.png" />
+    </head>
+    <body>
+        <header>
+            <p onclick="info_show();" id="info">ファイルを選択してください！</p>
+            <select id="diff-sel">
+                <option value="easy">かんたん</option>
+                <option value="normal">ふつう</option>
+                <option value="hard">むずかしい</option>
+                <option selected value="oni" name="おに">おに</option>
+                <option value="ura">おに(裏)</option>
+            </select>
+            <input type="file" id="file">
+        </header>
+        <main>
+            <noscript>JavaScript Disabled! It will not work!</noscript>
+            <div class="canvas-holder" id="canvas-holder">
+                <canvas id="canvas"></canvas>
+            </div>
+            
+        </main>
+        <footer>
+            <button onclick="se(0);">クリア</button>
+            <button onclick="selectAll();">全選択</button>
+            <button onclick="disSelect();">選択解除</button>
+            <button onclick="sizeMeasure += 20;">サイズ+</button>
+            <button onclick="if(sizeMeasure != 20)sizeMeasure -= 20;">サイズ-</button>
+            <button onclick="size += 20;">音符サイズ+</button>
+            <button onclick="if(size != 20)size -= 20;">音符サイズ-</button>
+            <br>
+            <button onclick="se(1);">利き手</button>
+            <button onclick="se(2);">逆手</button>
+            <button onclick="se(3);">ヴァーナス</button>
+            <button onclick="se(4);">交互</button>
+            <button onclick="se(5);">分業(ド)</button>
+            <button onclick="se(6);">分業(カ)</button>
+            <button onclick="se(7);">ロール</button>
+            <br>
+            <button onclick="addDividers();">両端に区切り線追加</button>
+            <button onclick="removeDividers();">内側の区切り線削除</button>
+            <br>
+            <button onclick="addArrangement('J');">アレンジ(ド)</button>
+            <button onclick="addArrangement('K');">アレンジ(カ)</button>
+            <button onclick="removeArrangement();">アレンジ消去</button>
+            <br>
+            <button onclick="setting_show();">設定</button>
+            <button onclick="exportJSON();">譜面ラボJSONファイルを出力</button>
+        </footer>
+        <div class="info" id="info_box">
+            <button onclick="info_hide();">閉じる</button>
+            <p id="info_text"></p>
+        </div>
+        <div class="info" id="setting_box">
+            <button onclick="setting_hide();">閉じる</button>
+            <br>
+            <span>左右の表示：</span>
+            <select onchange="LRSet = event.target.value;">
+                <option selected value="LR@">LR</option>
+                <option value="←→@">←→</option>
+                <option value="左右@">左右</option>
+            </select><br>
+            <span>利き手：</span>
+            <select onchange="mainHand = (event.target.value=='R')?1:2;offHand = (event.target.value=='R')?2:1;">
+                <option selected value="R">右手</option>
+                <option value="L">左手</option>
+            </select><br>
+            <p>譜面ラボ beta 1.0.0</p>
+            <p>譜面ラボはオープンソースです。プルリクエスト大歓迎です！</p>
+            <a href="https://github.com/taikun24/fumen-lab">レポジトリはこちら</a>
+            <a href="https://github.com/taikun24">作者(taikun24)</a>
+        </div>
+        <script src="tools.js"></script>
+        <script src="json.js"></script>
+        <script src="canvas.js"></script>
+        <script src="controll.js"></script>
+        <script src="tjaloader.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
