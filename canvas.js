@@ -6,6 +6,9 @@ function line(x1, y1, x2, y2) {
     ctx.closePath();
     ctx.stroke();
 }
+let paintPrev = -1;
+let paintPrevType = 0;
+let balloonIndex = 0;
 function paintTja(tjaLine, lrs, x, y, size, measure) {
     line(x, y - size / 5, x, y + size / 5);
     if (tjaLine.length == 0) return;
@@ -20,20 +23,11 @@ function paintTja(tjaLine, lrs, x, y, size, measure) {
             if (lrs[i] == 1) txt = LRSet[offHand - 1];
             if (lrs[i] == 3) txt = LRSet[2];
             ctx.fillStyle = 'white';
-            ctx.fillText(txt, x + dist * i - fontSize / 2, y + fontSize / 2);
+            if (c != '8') ctx.fillText(txt, x + dist * i - fontSize / 2, y + fontSize / 2);
         }
     }
 }
-function drawNote(x, y, type, s) {
-    let size = s;
-    if (type == '3' || type == '4') size *= 1.5;
-    let color = 'black';
-    if (type == '1' || type == '3') color = 'red';
-    if (type == '2' || type == '4') color = 'blue';
-    if (type == 'J') color = 'pink';
-    if (type == 'K') color = 'lightblue';
-    if (x - size > canvas.width) return;
-    if (x + size < 0) return;
+function drawNoteCircle(x, y, color, size) {
     ctx.beginPath();
     ctx.arc(x, y, size, 0, Math.PI * 2);
     ctx.closePath();
@@ -46,6 +40,65 @@ function drawNote(x, y, type, s) {
     ctx.closePath();
     ctx.fillStyle = color;
     ctx.fill();
+}
+function drawNote(x, y, type, s) {
+    let size = s;
+    if (type == '3' || type == '4') size *= 1.5;
+    let color = 'black';
+    if (type == '1' || type == '3') color = 'red';
+    if (type == '2' || type == '4') color = 'blue';
+    if (type == '5' || type == '6') color = '#ffba00';
+    if (type == '7') { color = '#fc7801'; balloonIndex++; }
+    if (type == 'J') color = 'pink';
+    if (type == 'K') color = 'lightblue';
+    if (type == '8') {
+        if (paintPrev == -1) return;
+        if (paintPrevType == '5' || paintPrevType == '6') color = '#ffba00';
+        if (paintPrevType == '6') size *= 1.5;
+        if (paintPrevType == '7') color = '#fc7801';
+        ctx.fillStyle = color;
+        ctx.strokeStyle = 'black';
+        ctx.beginPath();
+        // body
+        ctx.beginPath();
+        ctx.rect(paintPrev, y - size, (x - paintPrev), size * 2);
+        ctx.closePath();
+        ctx.fill();
+        // tail
+        ctx.arc(x, y, size, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
+        // body + tail stroke
+        ctx.beginPath();
+        ctx.moveTo(paintPrev, y - size);
+        ctx.arc(x, y, size, Math.PI / 2 * 3, Math.PI / 2);
+        ctx.lineTo(paintPrev, y + size);
+        ctx.closePath();
+        ctx.stroke();
+        // head
+        if (paintPrevType == '7') {
+            ctx.beginPath();
+            ctx.moveTo(paintPrev - size, y);
+            ctx.arc(paintPrev + size * 3, y, size, Math.PI / 2 * 3, Math.PI / 2);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = 'black';
+            ctx.fillText(balloon[balloonIndex] + '打', paintPrev, y - size * 2);
+        }
+        drawNoteCircle(paintPrev, y, color, size);
+        paintPrev = -1;
+        return;
+    }
+
+    if (type == '5' || type == '6' || type == '7') {
+        paintPrev = x;
+        paintPrevType = type;
+    }
+    if (x - size > canvas.width) return;
+    if (x + size < 0) return;
+    drawNoteCircle(x, y, color, size);
+
 }
 function animation() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -112,7 +165,8 @@ function repaint() {
         let pos = idToPosA([divider.row, divider.col + 1 / 2, fumen[divider.row].length]);
         line(pos, 150, pos, 250);
     });
-
+    paintPrev = -1;
+    balloonIndex = -1;
     for (i in fumen) {
         paintTja(fumen[i], lrs[i], idToPos(i), 200, size, sizeMeasure);
     }

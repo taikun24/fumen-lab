@@ -1,4 +1,4 @@
-let tjaText, meta_tag, fumen, info, lrs, filename;
+let tjaText, meta_tag, fumen, info, lrs, filename, balloon;
 function loadFile() {
     const elem = document.getElementById('file');
     if (elem.files.length != 1) {
@@ -91,7 +91,7 @@ function parseTja() {
                         temp_info = [];
                         lrs.push(new Array(temp.length).fill(0));
                         temp = '';
-                        continue;
+                        break;
                     } else {
                         temp += c;
                     }
@@ -104,6 +104,9 @@ function parseTja() {
             meta_tag[key] = value;
             if (key.toUpperCase() == 'COURSE') {
                 isCourseMatch = course_match.indexOf(value.toUpperCase()) != -1;
+            }
+            if (key.toUpperCase() == 'BALLOON') {
+                balloon = value.split(',');
             }
         }
     }
