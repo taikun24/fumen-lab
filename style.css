@@ -1,5 +1,8 @@
 body{
     margin:  0 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 header{
     height: calc(5vh - 10px);
