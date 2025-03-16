@@ -5,11 +5,11 @@ body{
     flex-direction: column;
 }
 header{
-    height: calc(5vh - 10px);
+    min-height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding: 5px 5px;
+    padding: 10px;
     background-color: rgb(233, 233, 233);
 }
 header p{
