@@ -16,7 +16,8 @@ header p{
     margin:  0 0;
 }
 main{
-    height: 65vh;
+    flex: 1;
+    min-height: 300px;
 }
 .canvas-holder{
     width: 100%;
