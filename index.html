@@ -2,7 +2,8 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="theme-color" content="#e9e9e9" />
         <title>譜面ラボ</title>
         <meta name="description" content="譜面ラボはTJAファイル形式の譜面を読み込み研究できるサイトです。様々な運手/区切り/アレンジに対応しています。" />
         <meta name="format-detection" content="telephone=no" />
@@ -39,31 +40,41 @@
             
         </main>
         <footer>
-            <button onclick="se(0);">クリア</button>
-            <button onclick="selectAll();">全選択</button>
-            <button onclick="disSelect();">選択解除</button>
-            <button onclick="sizeMeasure += 20;">サイズ+</button>
-            <button onclick="if(sizeMeasure != 20)sizeMeasure -= 20;">サイズ-</button>
-            <button onclick="size += 20;">音符サイズ+</button>
-            <button onclick="if(size != 20)size -= 20;">音符サイズ-</button>
-            <br>
-            <button onclick="se(1);">利き手</button>
-            <button onclick="se(2);">逆手</button>
-            <button onclick="se(3);">ヴァーナス</button>
-            <button onclick="se(4);">交互</button>
-            <button onclick="se(5);">分業(ド)</button>
-            <button onclick="se(6);">分業(カ)</button>
-            <button onclick="se(7);">ロール</button>
-            <br>
-            <button onclick="addDividers();">両端に区切り線追加</button>
-            <button onclick="removeDividers();">内側の区切り線削除</button>
-            <br>
-            <button onclick="addArrangement('J');">アレンジ(ド)</button>
-            <button onclick="addArrangement('K');">アレンジ(カ)</button>
-            <button onclick="removeArrangement();">アレンジ消去</button>
-            <br>
-            <button onclick="setting_show();">設定</button>
-            <button onclick="exportJSON();">譜面ラボJSONファイルを出力</button>
+            <div class="button-group">
+                <button onclick="se(0);">クリア</button>
+                <button onclick="selectAll();">全選択</button>
+                <button onclick="disSelect();">選択解除</button>
+            </div>
+            <div class="button-group">
+                <button onclick="sizeMeasure += 20;">サイズ+</button>
+                <button onclick="if(sizeMeasure != 20)sizeMeasure -= 20;">サイズ-</button>
+                <button onclick="size += 20;">音符サイズ+</button>
+                <button onclick="if(size != 20)size -= 20;">音符サイズ-</button>
+            </div>
+            <div class="button-group">
+                <button onclick="se(1);">利き手</button>
+                <button onclick="se(2);">逆手</button>
+                <button onclick="se(3);">ヴァーナス</button>
+                <button onclick="se(4);">交互</button>
+            </div>
+            <div class="button-group">
+                <button onclick="se(5);">分業(ド)</button>
+                <button onclick="se(6);">分業(カ)</button>
+                <button onclick="se(7);">ロール</button>
+            </div>
+            <div class="button-group">
+                <button onclick="addDividers();">両端に区切り線追加</button>
+                <button onclick="removeDividers();">内側の区切り線削除</button>
+            </div>
+            <div class="button-group">
+                <button onclick="addArrangement('J');">アレンジ(ド)</button>
+                <button onclick="addArrangement('K');">アレンジ(カ)</button>
+                <button onclick="removeArrangement();">アレンジ消去</button>
+            </div>
+            <div class="button-group">
+                <button onclick="setting_show();">設定</button>
+                <button onclick="exportJSON();">譜面ラボJSONファイルを出力</button>
+            </div>
         </footer>
         <div class="info" id="info_box">
             <button onclick="info_hide();">閉じる</button>
